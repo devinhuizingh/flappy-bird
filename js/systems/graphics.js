@@ -17,12 +17,14 @@ GraphicsSystem.prototype.tick = function() {
         this.canvas.height != this.canvas.offsetHeight) {
         this.canvas.width = this.canvas.offsetWidth;
         this.canvas.height = this.canvas.offsetHeight;
-        // Continue the render loop
-    window.requestAnimationFrame(this.tick.bind(this));
     }
 
     // Clear the canvas
     this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.context.save();
+    this.context.translate(this.canvas.width / 2, this.canvas.height);
+    this.context.scale(this.canvas.height, -this.canvas.height);
 
     // Rendering goes here
     for (var i=0; i<this.entities.length; i++) {
@@ -33,6 +35,10 @@ GraphicsSystem.prototype.tick = function() {
 
         entity.components.graphics.draw(this.context);
     }
-};
+ 
+    this.context.restore();
 
+    // Continue the render loop
+    window.requestAnimationFrame(this.tick.bind(this));
+};
 exports.GraphicsSystem = GraphicsSystem;
