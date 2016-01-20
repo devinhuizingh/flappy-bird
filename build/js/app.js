@@ -1,6 +1,7 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var BirdGraphicsComponent = function(entity) {
     this.entity = entity;
+    console.dir(entity);
 };
 
 BirdGraphicsComponent.prototype.draw = function(context) {
@@ -24,17 +25,18 @@ exports.BirdGraphicsComponent = BirdGraphicsComponent;
 },{}],2:[function(require,module,exports){
 var PipeGraphicsComponent = function(entity) {
     this.entity = entity;
+    console.dir(entity);
 };
 
 PipeGraphicsComponent.prototype.draw = function(context) {
     var position = this.entity.components.physics.position;
-    console.log("drawing a pipe")
+    console.log("pipe drawing")
     context.save();
     context.translate(position.x, position.y);
     context.beginPath();
-    context.arc(10, 10, 10, 10, 10 * Math.PI);
+    context.rect(0, 0, 0.15, 0.6);
     context.fill();
-    //context.closePath();
+    context.closePath();
     context.restore();
 };
 
@@ -96,8 +98,9 @@ var physicsComponent = require("../components/physics/physics");
 var Pipe = function() {
     console.log("Creating Pipe entity");
 	var physics = new physicsComponent.PhysicsComponent(this);
-    physics.position.y = 5;
-    physics.acceleration.x = -1;
+    physics.position.y = .8;
+    physics.position.x = .8; 
+    //physics.acceleration.x = 0;
 
     var graphics = new graphicsComponent.PipeGraphicsComponent(this);
     

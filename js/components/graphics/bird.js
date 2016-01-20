@@ -1,5 +1,6 @@
 var BirdGraphicsComponent = function(entity) {
     this.entity = entity;
+    console.dir(entity);
 };
 
 BirdGraphicsComponent.prototype.draw = function(context) {

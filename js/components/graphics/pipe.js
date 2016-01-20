@@ -1,16 +1,17 @@
 var PipeGraphicsComponent = function(entity) {
     this.entity = entity;
+    console.dir(entity);
 };
 
 PipeGraphicsComponent.prototype.draw = function(context) {
     var position = this.entity.components.physics.position;
-    console.log("drawing a pipe")
+    console.log("pipe drawing")
     context.save();
     context.translate(position.x, position.y);
     context.beginPath();
-    context.arc(10, 10, 10, 10, 10 * Math.PI);
+    context.rect(0, 0, 0.15, 0.6);
     context.fill();
-    //context.closePath();
+    context.closePath();
     context.restore();
 };
 
