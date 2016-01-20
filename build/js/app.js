@@ -26,8 +26,16 @@ var PipeGraphicsComponent = function(entity) {
     this.entity = entity;
 };
 
-PipeGraphicsComponent.prototype.draw = function() {
-    console.log("Drawing a pipe");
+PipeGraphicsComponent.prototype.draw = function(context) {
+    var position = this.entity.components.physics.position;
+    console.log("drawing a pipe")
+    context.save();
+    context.translate(position.x, position.y);
+    context.beginPath();
+    context.arc(10, 10, 10, 10, 10 * Math.PI);
+    context.fill();
+    //context.closePath();
+    context.restore();
 };
 
 exports.PipeGraphicsComponent = PipeGraphicsComponent;
@@ -83,18 +91,26 @@ var Bird = function() {
 exports.Bird = Bird;
 },{"../components/graphics/bird":1,"../components/physics/physics":3}],5:[function(require,module,exports){
 var graphicsComponent = require("../components/graphics/pipe");
+var physicsComponent = require("../components/physics/physics");
 
 var Pipe = function() {
     console.log("Creating Pipe entity");
+	var physics = new physicsComponent.PhysicsComponent(this);
+    physics.position.y = 5;
+    physics.acceleration.x = -1;
 
     var graphics = new graphicsComponent.PipeGraphicsComponent(this);
+    
     this.components = {
-    	graphics: graphics
+    physics: physics,
+    graphics: graphics,
+
+
     };
 };
 
 exports.Pipe = Pipe;
-},{"../components/graphics/pipe":2}],6:[function(require,module,exports){
+},{"../components/graphics/pipe":2,"../components/physics/physics":3}],6:[function(require,module,exports){
 
 
 var graphicsSystem = require('./systems/graphics');
